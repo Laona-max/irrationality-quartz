@@ -8,15 +8,15 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Quartz 4",
+    pageTitle: "當我們開始問「憑什麼」",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
     analytics: {
       provider: "plausible",
     },
-    locale: "en-US",
-    baseUrl: "quartz.jzhao.xyz",
+    locale: "zh-TW",
+    baseUrl: process.env.SITE_DOMAIN ?? process.env.VERCEL_PROJECT_PRODUCTION_URL,
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "modified",
     theme: {
@@ -89,7 +89,7 @@ const config: QuartzConfig = {
       Plugin.Favicon(),
       Plugin.NotFoundPage(),
       // Comment out CustomOgImages to speed up build time
-      Plugin.CustomOgImages(),
+      // Standard Quartz social image; no build-time font download required.
     ],
   },
 }
