@@ -22,7 +22,10 @@ export const defaultContentPageLayout: PageLayout = {
       condition: (page) => page.fileData.slug !== "index",
     }),
     Component.ArticleTitle(),
-    Component.ContentMeta(),
+    Component.ConditionalRender({
+      component: Component.ContentMeta(),
+      condition: (page) => page.fileData.slug !== "index",
+    }),
     Component.TagList(),
   ],
   left: [
@@ -38,12 +41,26 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      title: "讀書筆記",
+      mapFn: (node) => {
+        const titles: Record<string, string> = {
+          非理性的魅惑_序論與第一章筆記: "非理性的魅惑｜序論與第一章",
+          知識分子為何犯錯_第二章讀書心得: "知識分子為何犯錯？｜第二章",
+        }
+        if (titles[node.slugSegment]) node.displayName = titles[node.slugSegment]
+      },
+    }),
   ],
   right: [
-    Component.Graph(),
-    Component.DesktopOnly(Component.TableOfContents()),
-    Component.Backlinks(),
+    Component.ConditionalRender({
+      component: Component.DesktopOnly(Component.TableOfContents()),
+      condition: (page) => page.fileData.slug !== "index",
+    }),
+    Component.ConditionalRender({
+      component: Component.Backlinks(),
+      condition: (page) => page.fileData.slug !== "index",
+    }),
   ],
 }
 
@@ -62,7 +79,16 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      title: "讀書筆記",
+      mapFn: (node) => {
+        const titles: Record<string, string> = {
+          非理性的魅惑_序論與第一章筆記: "非理性的魅惑｜序論與第一章",
+          知識分子為何犯錯_第二章讀書心得: "知識分子為何犯錯？｜第二章",
+        }
+        if (titles[node.slugSegment]) node.displayName = titles[node.slugSegment]
+      },
+    }),
   ],
   right: [],
 }
